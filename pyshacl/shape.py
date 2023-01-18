@@ -340,12 +340,14 @@ class Shape(object):
         for tc in target_classes:
             s = data_graph.subjects(RDF_type, tc)
             found_target_instances.update(s)
-            subc = data_graph.transitive_subjects(RDFS_subClassOf, tc)
-            for subclass in iter(subc):
-                if subclass == tc:
-                    continue
-                s1 = data_graph.subjects(RDF_type, subclass)
-                found_target_instances.update(s1)
+            # TODO: checking for the NodeShape constraint in subclass leads to false errors
+            # with closed shapes, since the node is not supposed to comply with a parent class constraints
+            # subc = data_graph.transitive_subjects(RDFS_subClassOf, tc)
+            # for subclass in iter(subc):
+            #     if subclass == tc:
+            #         continue
+            #     s1 = data_graph.subjects(RDF_type, subclass)
+            #     found_target_instances.update(s1)
         found_node_targets.update(found_target_instances)
         found_target_subject_of = set()
         for s_of in target_subjects_of:
